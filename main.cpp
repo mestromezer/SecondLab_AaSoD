@@ -28,12 +28,30 @@ char getch(void)
 }
 
 template<typename T>
+ostream& operator<<(ostream &os, const Polynominal<T> &Obj)
+{
+    if (Obj.GetOrderOfPolynominal() == -1)
+    {
+        cout << "Polynominal has no coefs" << endl;
+    }
+    Coefficients<T> *Pointer = Obj.GetHead();
+    for (int i = 0; i < Obj.GetOrderOfPolynominal() + 1 && Pointer; i++)
+    {
+        os << Pointer->Value << "*x^" << Pointer->MyOrder;
+        if (Pointer->Next)
+            os << " + ";
+        Pointer = Pointer->Next;
+    }
+    return os;
+}   
+
+template<typename T>
 Polynominal<T> *MenuInput()
 {
-    std::cout << "Create poilynominal menu\n\n"
+    cout << "Create poilynominal menu\n\n"
          << endl;
 
-    std::cout << "Order of Polynominal: " << endl;
+    cout << "Order of Polynominal: " << endl;
     long long OrderOfPolynominal = 0;
     cin >> OrderOfPolynominal;
 
@@ -49,15 +67,15 @@ Polynominal<T> *MenuInput()
 
     for (long long i = OrderOfPolynominal; i >= 0; i--)
     {
-        std::cout << "Coef by " << i << ":\n";
+        cout << "Coef by " << i << ":\n";
         double Coefficient = 0;
         cin >> Coefficient;
         Newbie->Set(i, Coefficient);
         cout << endl;
     }
 
-    std::cout << "Created polynominal: " << *Newbie << endl;
-    std::cout << "Press any key" << endl;
+    cout << "Created polynominal: " << *Newbie << endl;
+    cout << "Press any key" << endl;
     getch();
 
     return Newbie;
@@ -68,7 +86,7 @@ ostream &operator<<(ostream &os, const Polynominal<T> &Obj);
 /*{
     if (Obj.GetOrderOfPolynominal() == -1)
     {
-        std::cout << "Polynominal has no coefs" << endl;
+        cout << "Polynominal has no coefs" << endl;
     }
     Coefficients<T> *Pointer = Obj.GetHead();
     for (int i = 0; i < Obj.GetOrderOfPolynominal() + 1 && Pointer; i++)
@@ -84,7 +102,7 @@ ostream &operator<<(ostream &os, const Polynominal<T> &Obj);
 template<typename T>
 T InputValue()
 {
-    std::cout << "Give a value: " << std::endl;
+    cout << "Give a value: " << endl;;
     double X = 0;
     cin >> X;
     return X;
@@ -101,7 +119,7 @@ void GiveAnX(const Polynominal<T> *Object)
         Y += (*Object)[i] * pow(X, i);
     }
 
-    std::cout << "Value for polynom (x = " << X << "): " << Y << endl;
+    cout << "Value for polynom (x = " << X << "): " << Y << endl;
 }
 
 template<typename T>
@@ -109,8 +127,8 @@ void Sum(const Polynominal<T> *Object)
 {
     system("clear");
 
-    std::cout << "Firstly input another polynom" << std::endl;
-    std::cout << "Any key to input another polynom" << std::endl;
+    cout << "Firstly input another polynom" << endl;;
+    cout << "Any key to input another polynom" << endl;;
 
     getch();
 
@@ -120,10 +138,10 @@ void Sum(const Polynominal<T> *Object)
 
     system("clear");
 
-    std::cout << "Sum of two polynominals:" << std::endl;
-    std::cout << "\n\nFirst: " << (*Object) << std::endl;
-    std::cout << "\nSecond: " << (*Another) << std::endl;
-    std::cout << "\nTheir sum: " << ((*Object) + (*Another)) << std::endl;
+    cout << "Sum of two polynominals:" << endl;;
+    cout << "\n\nFirst: " << (*Object) << endl;;
+    cout << "\nSecond: " << (*Another) << endl;;
+    cout << "\nTheir sum: " << ((*Object) + (*Another)) << endl;;
 
     delete Another;
 }
@@ -133,11 +151,11 @@ void Substract(const Polynominal<T> *Object)
 {
     system("clear");
 
-    std::cout << "Substract menu\n"
+    cout << "Substract menu\n"
          << endl;
 
-    std::cout << "Firstly input another polynom" << endl;
-    std::cout << "Any key to input another polynom" << endl;
+    cout << "Firstly input another polynom" << endl;
+    cout << "Any key to input another polynom" << endl;
 
     getch();
 
@@ -147,13 +165,13 @@ void Substract(const Polynominal<T> *Object)
 
     system("clear");
 
-    std::cout << "Substract menu\n"
+    cout << "Substract menu\n"
          << endl;
 
-    std::cout << "Sum of two polynominals:" << endl;
-    std::cout << "First: " << (*Object) << endl;
-    std::cout << "Second: " << (*Another) << endl;
-    std::cout << "Their substruction result: " << ((*Object) - (*Another)) << endl;
+    cout << "Sum of two polynominals:" << endl;
+    cout << "First: " << (*Object) << endl;
+    cout << "Second: " << (*Another) << endl;
+    cout << "Their substruction result: " << ((*Object) - (*Another)) << endl;
 
     delete Another;
 }
@@ -161,16 +179,16 @@ void Substract(const Polynominal<T> *Object)
 template <typename T>
 void MultiplyByArg(const Polynominal<T> *Object)
 {
-    std::cout << "Multiply by arg menu\n"
+    cout << "Multiply by arg menu\n"
          << endl;
     T Arg = InputValue<T>();
 
     system("clear");
 
-    std::cout << "Multiply by arg menu\n"
+    cout << "Multiply by arg menu\n"
          << endl;
 
-    std::cout << "(" << (*Object) << ")"
+    cout << "(" << (*Object) << ")"
          << " * " << Arg << " :" << endl;
     cout << (*Object) * Arg << endl;
 }
@@ -180,13 +198,13 @@ void GetCoefByIndex(const Polynominal<T> *Object)
 {
     system("clear");
 
-    std::cout << "Get coefficient by index menu\n"
+    cout << "Get coefficient by index menu\n"
          << endl;
     cout << (*Object) << endl;
-    std::cout << "Input index: ";
+    cout << "Input index: ";
     int Index = 0;
     cin >> Index;
-    std::cout << "Value: " << (*Object)[Index] << endl;
+    cout << "Value: " << (*Object)[Index] << endl;
 }
 
 template <typename T>
@@ -194,22 +212,22 @@ void GetPremitiveFucntion(const Polynominal<T> *Object)
 {
     system("clear");
 
-    std::cout << "Get Premitive funtion menu\n"
+    cout << "Get Premitive funtion menu\n"
          << endl;
-    std::cout << "For : " << (*Object) << endl;
-    std::cout << "Primitive function equals: " << (*Object).Primitive() << endl;
+    cout << "For : " << (*Object) << endl;
+    cout << "Primitive function equals: " << (*Object).Primitive() << endl;
 }
 
 int MenuChoice()
 {
-    std::cout << "\n\t[1] - Give an X" << endl;
-    std::cout << "\n\t[2] - Sum" << endl;
-    std::cout << "\n\t[3] - Substract" << endl;
-    std::cout << "\n\t[4] - Multiply by arg" << endl;
-    std::cout << "\n\t[5] - Get coefficinent by index" << endl;
-    std::cout << "\n\t[6] - Get premitive fucntion" << endl;
-    std::cout << "\n\t[BACKSPACE] - Set new polynoms" << endl;
-    std::cout << "\n\n\tEsc - Exit" << endl;
+    cout << "\n\t[1] - Give an X" << endl;
+    cout << "\n\t[2] - Sum" << endl;
+    cout << "\n\t[3] - Substract" << endl;
+    cout << "\n\t[4] - Multiply by arg" << endl;
+    cout << "\n\t[5] - Get coefficinent by index" << endl;
+    cout << "\n\t[6] - Get premitive fucntion" << endl;
+    cout << "\n\t[BACKSPACE] - Set new polynoms" << endl;
+    cout << "\n\n\tEsc - Exit" << endl;
     while (true)
     {
         int key = getch();
@@ -225,7 +243,7 @@ template <typename T> void Menu()
     while (true)
     {
 
-        std::cout << "Hellow, world!" << endl;
+        cout << "Hellow, world!" << endl;
         system("clear");
 
         Polynominal<T> *Object = nullptr;
@@ -236,8 +254,8 @@ template <typename T> void Menu()
         {
             system("clear");
 
-            std::cout << "Your polymon: ";
-            cout<<*Object << std::endl;
+            cout << "Your polymon: ";
+            cout<<*Object << endl;;
 
             int Choice = MenuChoice();
 
@@ -267,14 +285,14 @@ template <typename T> void Menu()
                 break;
             case 27: // Exit
                 system("clear");
-                std::cout << "Word is done" << endl;
+                cout << "Word is done" << endl;
                 return;
                 break;
             default:
                 break;
             }
 
-            std::cout << "Press any key" << endl;
+            cout << "Press any key" << endl;
             getch();
         }
     }
@@ -282,37 +300,39 @@ template <typename T> void Menu()
 
 int main()
 {
-    cout<<"Choose type:"<<std::endl;
-    cout<<"[1] - int"<<std::endl;
-    cout<<"[2] - float"<<std::endl;
-    cout<<"[3] - double"<<std::endl;
-    cout<<"[4] - complex (float)"<<std::endl;
-    cout<<"[5] - complex (double)"<<std::endl;
+    while(true){
+        cout<<"Choose type:"<<endl;;
+        cout<<"[1] - int"<<endl;;
+        cout<<"[2] - float"<<endl;;
+        cout<<"[3] - double"<<endl;;
+        cout<<"[4] - complex (float)"<<endl;;
+        cout<<"[5] - complex (double)"<<endl;;
+        cout<<"[ESC] - Exit"<<endl;;
 
-    int Choice = 0;
+        int Choice = getch();
 
-    cin>>Choice;
-
-    switch (Choice)
-    {
-    case 1:
-        Menu<int>();
-        break;
-    case 2:
-        Menu<float>();
-        break;
-    case 3:
-        Menu<double>();
-        break;
-    case 4:
-        Menu<std::complex<float>>();
-        break;
-    case 5:
-        Menu<complex<double>>();
-        break;
-    
-    default:
-        break;
+        switch (Choice)
+        {
+        case 49:
+            Menu<int>();
+            break;
+        case 50:
+            Menu<float>();
+            break;
+        case 51:
+            Menu<double>();
+            break;
+        case 52:
+            Menu<std::complex<float>>();
+            break;
+        case 53:
+            Menu<complex<double>>();
+            break;
+        case 27:
+            return EXIT_SUCCESS;
+        default:
+            system("clear");
+            break;
+        }
     }
-    return 0;
 }
