@@ -46,7 +46,88 @@ ostream& operator<<(ostream &os, const Polynominal<T> &Obj)
 }   
 
 template<typename T>
-Polynominal<T> *MenuInput()
+void MenuInputComplex()
+{
+    system("clear");
+
+    cout << "Create poilynominal menu\n\n"
+         << endl;
+
+    cout << "Order of Polynominal: " << endl;
+    long long OrderOfPolynominal = 0;
+    cin >> OrderOfPolynominal;
+
+    Polynominal<T> *Newbie = NULL;
+    try
+    {
+        Newbie = new Polynominal<T>(OrderOfPolynominal);
+    }
+    catch (exception e)
+    {
+        clog << "An exception occured" << endl;
+    }
+
+    double R = 0;
+    double I = 0;
+
+    for (int i = OrderOfPolynominal; i >= 0; i--)
+    {
+        cout << "Coef by (input like : *real *img)" << i << ":\n";
+        string str;
+        cin>>str;
+
+        R = stoi(str);
+
+        cin>>str;
+        I = stoi(str);
+
+        Newbie->Set(i,T(R,I));
+    }
+
+    cout << "Created polynominal: " << *Newbie << endl;
+    cout << "Press any key" << endl;
+    getch();
+
+    Menu2(Newbie);
+}
+
+template<typename T>
+void Menu1()
+{
+    cout << "Create poilynominal menu\n\n"
+         << endl;
+
+    cout << "Order of Polynominal: " << endl;
+    long long OrderOfPolynominal = 0;
+    cin >> OrderOfPolynominal;
+
+    Polynominal<T> *Newbie = NULL;
+    try
+    {
+        Newbie = new Polynominal<T>(OrderOfPolynominal);
+    }
+    catch (exception e)
+    {
+        clog << "An exception occured" << endl;
+    }
+
+    for (int i = OrderOfPolynominal; i >= 0; i--)
+    {
+        cout << "Coef by " << i << ":\n";
+        T Coefficient;
+        cin >> Coefficient;
+        Newbie->Set(i, Coefficient);
+    }
+
+    cout << "Created polynominal: " << *Newbie << endl;
+    cout << "Press any key" << endl;
+    getch();
+
+    Menu2(Newbie);
+}
+
+template<typename T>
+Polynominal<T> * MenuInputArg()
 {
     cout << "Create poilynominal menu\n\n"
          << endl;
@@ -129,7 +210,7 @@ void Sum(const Polynominal<T> *Object)
 
     system("clear");
 
-    const Polynominal<T> *Another = MenuInput<T>();
+    const Polynominal<T> *Another = MenuInputArg<T>();
 
     system("clear");
 
@@ -156,7 +237,7 @@ void Substract(const Polynominal<T> *Object)
 
     system("clear");
 
-    const Polynominal<T> *Another = MenuInput<T>();
+    const Polynominal<T> *Another = MenuInputArg<T>();
 
     system("clear");
 
@@ -233,17 +314,11 @@ int MenuChoice()
     }
 }
 
-template <typename T> void Menu()
+template <typename T> void Menu2(Polynominal<T> *Object)
 {
     while (true)
     {
-
-        cout << "Hellow, world!" << endl;
         system("clear");
-
-        Polynominal<T> *Object = nullptr;
-
-        Object = MenuInput<T>();
 
         while (Object)
         {
@@ -280,7 +355,7 @@ template <typename T> void Menu()
                 break;
             case 27: // Exit
                 system("clear");
-                cout << "Word is done" << endl;
+                cout << "Work is done" << endl;
                 return;
                 break;
             default:
@@ -290,12 +365,14 @@ template <typename T> void Menu()
             cout << "Press any key" << endl;
             getch();
         }
+        return;
     }
 }
 
 int main()
 {
     while(true){
+        system("clear");
         cout<<"Choose type:"<<endl;;
         cout<<"[1] - int"<<endl;;
         cout<<"[2] - float"<<endl;;
@@ -309,19 +386,19 @@ int main()
         switch (Choice)
         {
         case 49:
-            Menu<int>();
+            Menu1<int>();
             break;
         case 50:
-            Menu<float>();
+            Menu1<float>();
             break;
         case 51:
-            Menu<double>();
+            Menu1<double>();
             break;
         case 52:
-            Menu<std::complex<float>>();
+            MenuInputComplex<std::complex<float>>();
             break;
         case 53:
-            Menu<complex<double>>();
+            MenuInputComplex<complex<double>>();
             break;
         case 27:
             return EXIT_SUCCESS;
