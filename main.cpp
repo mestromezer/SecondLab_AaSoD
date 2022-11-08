@@ -65,13 +65,12 @@ Polynominal<T> *MenuInput()
         clog << "An exception occured" << endl;
     }
 
-    for (long long i = OrderOfPolynominal; i >= 0; i--)
+    for (int i = OrderOfPolynominal; i >= 0; i--)
     {
         cout << "Coef by " << i << ":\n";
-        double Coefficient = 0;
+        T Coefficient;
         cin >> Coefficient;
         Newbie->Set(i, Coefficient);
-        cout << endl;
     }
 
     cout << "Created polynominal: " << *Newbie << endl;
@@ -111,13 +110,9 @@ T InputValue()
 template<typename T>
 void GiveAnX(const Polynominal<T> *Object)
 {
-    T Y;
     T X = InputValue<T>();
 
-    for (int i = Object->GetOrderOfPolynominal(); i >= 0; i--)
-    {
-        Y += (*Object)[i] * pow(X, i);
-    }
+    T Y = Object->CountValue(X);
 
     cout << "Value for polynom (x = " << X << "): " << Y << endl;
 }

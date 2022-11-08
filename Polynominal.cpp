@@ -159,7 +159,7 @@ Polynominal<T> Polynominal<T>::operator*(T Val) const
     Coefficients<T> *Pointer = GetHead();
     Polynominal Result(Pointer->MyOrder);
 
-    for (long long i = 0; i <= GetOrderOfPolynominal(); i++)
+    while(Pointer != NULL)
     {
         Result.Set(Pointer->MyOrder, Pointer->Value * Val);
         Pointer = Pointer->Next;
@@ -172,7 +172,7 @@ Polynominal<T> Polynominal<T>::Primitive() const
 {
     Polynominal Result((OrderOfPolynominal + 1));
     Coefficients<T> *Pointer = GetHead();
-    for (int i = 0; Pointer != NULL; i++)
+    while(Pointer != NULL)
     {
         T Coef = Pointer->Value * (T(1) / T(Pointer->MyOrder + 1));
         Result.Set(((Pointer->MyOrder) + 1), Coef);
@@ -182,7 +182,7 @@ Polynominal<T> Polynominal<T>::Primitive() const
 }
 
 template<typename T>
-T Polynominal<T>::CountValue(T x)
+T Polynominal<T>::CountValue(T x) const
 {
     Coefficients<T> *Pointer = GetHead();
     T Ans = 0;

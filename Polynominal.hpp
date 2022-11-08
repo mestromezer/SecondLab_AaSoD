@@ -43,7 +43,7 @@ public:
     Polynominal Primitive() const;
 
 
-    T CountValue(T x);
+    T CountValue(T x) const;
 
     //friend ostream &operator<<(ostream &os, const Polynominal<T> &Obj);
 };
