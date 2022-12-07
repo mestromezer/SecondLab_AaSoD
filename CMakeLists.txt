@@ -1,4 +1,11 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(secondlab VERSION 0.1.0)
+project(FirstLab VERSION 0.1.0)
 
-add_executable(secondlab main.cpp Polynominal.cpp PolynominalError.cpp)
+include(CTest)
+enable_testing()
+
+add_executable(secondlab_aasod main.cpp Polynominal.cpp PolynominalError.cpp)
+
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)

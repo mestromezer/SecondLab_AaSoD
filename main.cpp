@@ -27,6 +27,21 @@ char getch(void)
     return buf;
 }
 
+template<class T>
+T check()
+{
+	T number = 0;
+	
+    while (!(cin >> number) || (cin.peek() != '\n'))
+    {
+        cin.clear();
+        while (cin.get() != '\n');
+        cout << "Incorrect value\n";
+    }
+
+    return number;
+}
+
 template<typename T>
 ostream& operator<<(ostream &os, const Polynominal<T> &Obj)
 {
@@ -46,60 +61,13 @@ ostream& operator<<(ostream &os, const Polynominal<T> &Obj)
 }   
 
 template<typename T>
-void MenuInputComplex()
-{
-    system("clear");
-
-    cout << "Create poilynominal menu\n\n"
-         << endl;
-
-    cout << "Order of Polynominal: " << endl;
-    long long OrderOfPolynominal = 0;
-    cin >> OrderOfPolynominal;
-
-    Polynominal<T> *Newbie = NULL;
-    try
-    {
-        Newbie = new Polynominal<T>(OrderOfPolynominal);
-    }
-    catch (exception e)
-    {
-        clog << "An exception occured" << endl;
-    }
-
-    double R = 0;
-    double I = 0;
-
-    for (int i = OrderOfPolynominal; i >= 0; i--)
-    {
-        cout << "Coef by (input like : *real *img)" << i << ":\n";
-        string str;
-        cin>>str;
-
-        R = stoi(str);
-
-        cin>>str;
-        I = stoi(str);
-
-        Newbie->Set(i,T(R,I));
-    }
-
-    cout << "Created polynominal: " << *Newbie << endl;
-    cout << "Press any key" << endl;
-    getch();
-
-    Menu2(Newbie);
-}
-
-template<typename T>
 void Menu1()
 {
     cout << "Create poilynominal menu\n\n"
          << endl;
 
     cout << "Order of Polynominal: " << endl;
-    long long OrderOfPolynominal = 0;
-    cin >> OrderOfPolynominal;
+    long long OrderOfPolynominal = check<long long>();
 
     Polynominal<T> *Newbie = NULL;
     try
@@ -114,8 +82,7 @@ void Menu1()
     for (int i = OrderOfPolynominal; i >= 0; i--)
     {
         cout << "Coef by " << i << ":\n";
-        T Coefficient;
-        cin >> Coefficient;
+        T Coefficient = check<T>();
         Newbie->Set(i, Coefficient);
     }
 
@@ -133,8 +100,7 @@ Polynominal<T> * MenuInputArg()
          << endl;
 
     cout << "Order of Polynominal: " << endl;
-    long long OrderOfPolynominal = 0;
-    cin >> OrderOfPolynominal;
+    long long OrderOfPolynominal = check<long long>();
 
     Polynominal<T> *Newbie = NULL;
     try
@@ -149,8 +115,7 @@ Polynominal<T> * MenuInputArg()
     for (int i = OrderOfPolynominal; i >= 0; i--)
     {
         cout << "Coef by " << i << ":\n";
-        T Coefficient;
-        cin >> Coefficient;
+        T Coefficient = check<T>();
         Newbie->Set(i, Coefficient);
     }
 
@@ -161,8 +126,8 @@ Polynominal<T> * MenuInputArg()
     return Newbie;
 }
 
-template<typename T>
-ostream &operator<<(ostream &os, const Polynominal<T> &Obj);
+/*template<typename T>
+ostream &operator<<(ostream &os, const Polynominal<T> &Obj);*/
 /*{
     if (Obj.GetOrderOfPolynominal() == -1)
     {
@@ -183,8 +148,7 @@ template<typename T>
 T InputValue()
 {
     cout << "Give a value: " << endl;;
-    double X = 0;
-    cin >> X;
+    T X = check<T>();
     return X;
 }
 
@@ -278,8 +242,7 @@ void GetCoefByIndex(const Polynominal<T> *Object)
          << endl;
     cout << (*Object) << endl;
     cout << "Input index: ";
-    int Index = 0;
-    cin >> Index;
+    long long Index = check<long long>();
     cout << "Value: " << (*Object)[Index] << endl;
 }
 
@@ -383,6 +346,8 @@ int main()
 
         int Choice = getch();
 
+        system("clear");
+
         switch (Choice)
         {
         case 49:
@@ -395,10 +360,12 @@ int main()
             Menu1<double>();
             break;
         case 52:
-            MenuInputComplex<std::complex<float>>();
+            //MenuInputComplex<std::complex<float>>();
+            Menu1<complex<float>>();
             break;
         case 53:
-            MenuInputComplex<complex<double>>();
+            //MenuInputComplex<complex<double>>();
+            Menu1<complex<double>>();
             break;
         case 27:
             return EXIT_SUCCESS;

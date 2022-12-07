@@ -26,7 +26,9 @@ public:
 
     long long GetOrderOfPolynominal() const;
 
-    Polynominal(long long Order);
+    explicit Polynominal(long long Order);
+
+    Polynominal(const Polynominal& Other);
 
     ~Polynominal();
 

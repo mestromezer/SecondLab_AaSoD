@@ -28,6 +28,19 @@ Polynominal<T>::Polynominal(long long Order)
 }
 
 template<typename T>
+Polynominal<T>::Polynominal(const Polynominal& Other)
+{
+    this->OrderOfPolynominal = Other.GetOrderOfPolynominal();
+    const Coefficients<T>* Data = Other.GetHead();
+
+    while(Data!= nullptr)
+    {
+        Set(Data->MyOrder, Data->Value);
+        Data = Data->Next;
+    }
+}
+
+template<typename T>
 Polynominal<T>::~Polynominal()
 {
     while (Head != NULL)
@@ -43,7 +56,7 @@ void Polynominal<T>::Set(long long Order, T Coef)
 {
     if (Coef == T(0))
     {
-        cout << "\n!!!Only non-zero coefs will be saved!!!" << endl;
+        //cout << "\n!!!Only non-zero coefs will be saved!!!" << endl;
         if (Order == GetOrderOfPolynominal())
         {
             OrderOfPolynominal -= 1;
@@ -172,7 +185,7 @@ Polynominal<T> Polynominal<T>::Primitive() const
 {
     Polynominal Result((OrderOfPolynominal + 1));
     Coefficients<T> *Pointer = GetHead();
-    while(Pointer != NULL)
+    while(Pointer)
     {
         T Coef = Pointer->Value * (T(1) / T(Pointer->MyOrder + 1));
         Result.Set(((Pointer->MyOrder) + 1), Coef);
